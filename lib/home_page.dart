@@ -18,7 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text(appName),
       ),
-      body: Board(),
+      body: const Board(),
     );
   }
 }
