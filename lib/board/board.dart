@@ -11,7 +11,19 @@ class Board extends StatefulWidget {
 }
 
 class _BoardState extends State<Board> {
-  final _ctrl = TransformationController();
+  late TransformationController _ctrl;
+
+  @override
+  void initState() {
+    _ctrl = TransformationController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
