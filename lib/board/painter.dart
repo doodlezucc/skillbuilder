@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../models/board.dart';
+import '../models/connectable.dart';
+
 class BoardPainter extends CustomPainter {
   static const cyclePeriod = Duration(seconds: 10);
   static final _cycleInSeconds = cyclePeriod.inMilliseconds / 1000;
@@ -13,6 +16,7 @@ class BoardPainter extends CustomPainter {
 
   final BuildContext context;
   final double animationTime;
+  final BoardData board;
 
   late final connectionPaint = Paint()
     ..style = PaintingStyle.stroke
@@ -25,11 +29,23 @@ class BoardPainter extends CustomPainter {
     ..strokeCap = StrokeCap.round
     ..strokeWidth = 6.0;
 
-  BoardPainter({required this.context, required this.animationTime});
+  BoardPainter({
+    required this.context,
+    required this.animationTime,
+    required this.board,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
-    paintLineBetween(const Offset(0, 0), const Offset(550, -50), canvas);
+    for (final obj in board.objects) {
+      if (obj is HasOutput) {
+        final ends = obj.connections;
+
+        for (final end in ends) {
+          paintLineBetween(obj.position, end.position, canvas);
+        }
+      }
+    }
   }
 
   void paintLineBetween(Offset a, Offset b, Canvas canvas) {

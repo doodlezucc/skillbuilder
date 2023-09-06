@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../models/board.dart';
 import 'painter.dart';
 
 class AnimatedPainter extends StatefulWidget {
-  const AnimatedPainter({super.key});
+  final BoardData board;
+
+  const AnimatedPainter({super.key, required this.board});
 
   @override
   State<AnimatedPainter> createState() => _AnimatedPainterState();
@@ -36,6 +39,7 @@ class _AnimatedPainterState extends State<AnimatedPainter>
         painter: BoardPainter(
           context: context,
           animationTime: _ctrl.value,
+          board: widget.board,
         ),
       ),
     );
