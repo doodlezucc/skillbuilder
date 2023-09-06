@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'animated_painter.dart';
 import 'milestone.dart';
-import 'painter.dart';
 
 class Board extends StatefulWidget {
   const Board({super.key});
@@ -19,19 +19,17 @@ class _BoardState extends State<Board> {
       boundaryMargin: const EdgeInsets.all(double.infinity),
       transformationController: _ctrl,
       minScale: 0.2,
-      child: Center(
+      child: const Center(
         child: Stack(
           alignment: Alignment.center,
           children: [
-            CustomPaint(
-              painter: BoardPainter(),
-            ),
+            AnimatedPainter(),
             Milestone(
               label: 'w',
               offset: Offset(0, 0),
             ),
             Milestone(
-              label: '10x cooking oder so\nepic',
+              label: 'some other kind of milestone\nwith an extra line',
               offset: Offset(550, -50),
             ),
           ],
