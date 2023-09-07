@@ -10,5 +10,5 @@ class MilestoneData extends BoardObject with HasInput, HasOutput {
   MilestoneData({required this.label, required super.position});
 
   @override
-  Widget toWidget() => Milestone(label: label, offset: position);
+  Widget toWidget() => Milestone(this);
 }
