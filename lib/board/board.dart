@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/board.dart';
+import '../models/milestone.dart';
 import 'animated_painter.dart';
 
 class Board extends StatefulWidget {
@@ -29,6 +30,18 @@ class _BoardState extends State<Board> {
     super.dispose();
   }
 
+  void onDoubleTap(TapDownDetails details) {
+    setState(() {
+      final position = details.localPosition - size.center(Offset.zero);
+      final object = MilestoneData(
+        label: 'New Milestone',
+        position: position,
+      );
+
+      widget.data.objects.add(object);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return InteractiveViewer(
@@ -37,18 +50,22 @@ class _BoardState extends State<Board> {
       transformationController: _ctrl,
       minScale: 0.2,
       child: Transform.translate(
-        offset: Offset(-size.width / 2, -size.height / 2) +
+        offset: -size.center(Offset.zero) +
             MediaQuery.of(context).size.center(Offset.zero),
         transformHitTests: true,
         child: Center(
           child: Stack(
             alignment: Alignment.center,
             children: [
-              SizedBox(
-                width: size.width,
-                height: size.height,
-              ),
               AnimatedPainter(board: widget.data),
+              GestureDetector(
+                onDoubleTapDown: onDoubleTap,
+                behavior: HitTestBehavior.opaque,
+                child: SizedBox(
+                  width: size.width,
+                  height: size.height,
+                ),
+              ),
               ...widget.data.objects.map((obj) => obj.toWidget()),
             ],
           ),
