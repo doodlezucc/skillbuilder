@@ -5,5 +5,5 @@ abstract class BoardObject {
 
   BoardObject({required this.position});
 
-  Widget toWidget();
+  Widget toWidget({required void Function() onDelete});
 }

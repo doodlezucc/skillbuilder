@@ -10,5 +10,8 @@ class MilestoneData extends BoardObject with HasInput, HasOutput {
   MilestoneData({required this.label, required super.position});
 
   @override
-  Widget toWidget() => Milestone(this);
+  Widget toWidget({
+    required void Function() onDelete,
+  }) =>
+      Milestone(this, onDelete: onDelete);
 }

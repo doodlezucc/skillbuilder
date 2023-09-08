@@ -5,8 +5,9 @@ import 'draggable.dart';
 
 class Milestone extends StatefulWidget {
   final MilestoneData data;
+  final void Function() onDelete;
 
-  const Milestone(this.data, {super.key});
+  const Milestone(this.data, {super.key, required this.onDelete});
 
   @override
   State<Milestone> createState() => _MilestoneState();
@@ -25,6 +26,9 @@ class _MilestoneState extends State<Milestone> {
       onDragStateChange: (isDragging) => setState(() {
         dragged = isDragging;
       }),
+      onLongPressStart: (_) {
+        widget.onDelete();
+      },
       child: UnconstrainedBox(
         child: Container(
           decoration: BoxDecoration(

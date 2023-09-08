@@ -66,7 +66,11 @@ class _BoardState extends State<Board> {
                   height: size.height,
                 ),
               ),
-              ...widget.data.objects.map((obj) => obj.toWidget()),
+              ...widget.data.objects.map((obj) => obj.toWidget(
+                    onDelete: () => setState(() {
+                      widget.data.removeObject(obj);
+                    }),
+                  )),
             ],
           ),
         ),
