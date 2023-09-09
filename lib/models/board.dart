@@ -7,9 +7,11 @@ class BoardData {
   void removeObject(PositionedBoardObject object) {
     objects.remove(object);
 
-    for (final obj in objects) {
-      if (obj is HasOutput) {
-        obj.connections.remove(object);
+    if (object is HasInput) {
+      for (final obj in objects) {
+        if (obj is HasOutput) {
+          obj.connections.remove(object);
+        }
       }
     }
   }
