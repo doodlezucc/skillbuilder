@@ -5,6 +5,7 @@ class BoardDraggable extends StatefulWidget {
   final Offset position;
   final void Function(Offset position) onDrag;
   final void Function(bool isDragging) onDragStateChange;
+  final GestureTapCallback? onTap;
   final GestureLongPressStartCallback? onLongPressStart;
   final Widget child;
 
@@ -14,6 +15,7 @@ class BoardDraggable extends StatefulWidget {
     required this.onDrag,
     required this.child,
     required this.onDragStateChange,
+    this.onTap,
     this.onLongPressStart,
   });
 
@@ -34,6 +36,7 @@ class _BoardDraggableState extends State<BoardDraggable> {
       child: GestureDetector(
         dragStartBehavior: DragStartBehavior.down,
         onLongPressStart: widget.onLongPressStart,
+        onTap: widget.onTap,
         onPanDown: (details) {
           widget.onDragStateChange(true);
           _startPointerPosition = details.localPosition;

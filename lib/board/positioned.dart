@@ -6,6 +6,7 @@ import 'draggable.dart';
 class PositionedObject<T extends PositionedBoardObject> extends StatefulWidget {
   final T data;
   final void Function() onDelete;
+  final GestureTapCallback? onTap;
   final Widget child;
 
   const PositionedObject(
@@ -13,6 +14,7 @@ class PositionedObject<T extends PositionedBoardObject> extends StatefulWidget {
     super.key,
     required this.onDelete,
     required this.child,
+    this.onTap,
   });
 
   @override
@@ -35,6 +37,7 @@ class _PositionedObjectState extends State<PositionedObject> {
       onLongPressStart: (_) {
         widget.onDelete();
       },
+      onTap: widget.onTap,
       child: UnconstrainedBox(
         child: Container(
           decoration: BoxDecoration(

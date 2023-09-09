@@ -6,16 +6,33 @@ import 'positioned.dart';
 class LabeledPositioned extends StatelessWidget {
   final LabeledData data;
   final void Function() onDelete;
+  final void Function()? onTap;
+  final String? debugLabel;
 
-  const LabeledPositioned(this.data, {super.key, required this.onDelete});
+  String get label {
+    if (debugLabel != null) {
+      return '${data.label} ($debugLabel)';
+    }
+
+    return data.label;
+  }
+
+  const LabeledPositioned(
+    this.data, {
+    super.key,
+    required this.onDelete,
+    this.onTap,
+    this.debugLabel,
+  });
 
   @override
   Widget build(BuildContext context) {
     return PositionedObject(
       data,
       onDelete: onDelete,
+      onTap: onTap,
       child: Text(
-        data.label,
+        label,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Theme.of(context).colorScheme.onPrimary,
