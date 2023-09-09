@@ -49,7 +49,7 @@ class BoardPainter extends CustomPainter {
   }
 
   void paintLineBetween(Offset a, Offset b, Canvas canvas) {
-    const length = 300;
+    final length = (b.dx - a.dx) / 2;
 
     final path = Path();
     path.moveTo(a.dx, a.dy);
