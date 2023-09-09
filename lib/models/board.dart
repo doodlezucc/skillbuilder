@@ -1,18 +1,32 @@
 import 'board_object.dart';
 import 'connectable.dart';
+import 'dependency_graph.dart';
 
-class BoardData {
-  final List<PositionedBoardObject> objects = [];
+typedef BoardContext = BoardData;
+
+class BoardData extends DependencyGraph {
+  final Set<PositionedBoardObject> _objects;
+  Iterable<PositionedBoardObject> get objects => _objects;
+
+  BoardData(Set<PositionedBoardObject> objects) : _objects = objects;
+
+  void addObject(PositionedBoardObject object) {
+    _objects.add(object);
+    invalidateDependencyCache();
+  }
 
   void removeObject(PositionedBoardObject object) {
-    objects.remove(object);
+    _objects.remove(object);
 
-    if (object is HasInput) {
-      for (final obj in objects) {
-        if (obj is HasOutput) {
-          obj.connections.remove(object);
-        }
+    for (final obj in _objects) {
+      if (obj is HasOutput) {
+        (obj as HasOutput).connections.remove(object);
       }
     }
+
+    invalidateDependencyCache();
   }
+
+  @override
+  Iterable<Connectable> get connectables => _objects;
 }

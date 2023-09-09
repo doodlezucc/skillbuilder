@@ -30,11 +30,10 @@ final _milestone = MilestoneData(
   position: const Offset(600, 0),
 );
 
-final exampleData = BoardData()
-  ..objects.addAll([
-    _activityPotatoSalad..connections.add(_activityCook),
-    _activityCook..connections.add(_skillCookingBasics),
-    _skillCookingBasics..connections.add(_skillCooking),
-    _skillCooking..connections.add(_milestone),
-    _milestone,
-  ]);
+final exampleData = BoardData({
+  _activityPotatoSalad..connections.add(_activityCook),
+  _activityCook..connections.add(_skillCookingBasics),
+  _skillCookingBasics..connections.add(_skillCooking),
+  _skillCooking..connections.add(_milestone),
+  _milestone,
+});

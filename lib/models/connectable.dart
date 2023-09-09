@@ -1,7 +1,5 @@
-import 'board_object.dart';
+mixin Connectable {}
 
-mixin HasInput on PositionedBoardObject {}
-
-mixin HasOutput on PositionedBoardObject {
-  List<HasInput> connections = [];
+mixin HasOutput on Connectable {
+  Set<Connectable> connections = {};
 }

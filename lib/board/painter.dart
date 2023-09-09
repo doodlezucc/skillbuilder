@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/board.dart';
+import '../models/board_object.dart';
 import '../models/connectable.dart';
 
 class BoardPainter extends CustomPainter {
@@ -39,10 +40,14 @@ class BoardPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     for (final obj in board.objects) {
       if (obj is HasOutput) {
-        final ends = obj.connections;
+        final ends = (obj as HasOutput).connections;
 
         for (final end in ends) {
-          paintLineBetween(obj.position, end.position, canvas);
+          paintLineBetween(
+            obj.position,
+            (end as PositionedBoardObject).position,
+            canvas,
+          );
         }
       }
     }

@@ -38,7 +38,7 @@ class _BoardState extends State<Board> {
         position: position,
       );
 
-      widget.data.objects.add(object);
+      widget.data.addObject(object);
     });
   }
 
@@ -67,6 +67,7 @@ class _BoardState extends State<Board> {
                 ),
               ),
               ...widget.data.objects.map((obj) => obj.toWidget(
+                    context: widget.data,
                     onDelete: () => setState(() {
                       widget.data.removeObject(obj);
                     }),
