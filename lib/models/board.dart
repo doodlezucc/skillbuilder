@@ -2,9 +2,9 @@ import 'board_object.dart';
 import 'connectable.dart';
 
 class BoardData {
-  final List<BoardObject> objects = [];
+  final List<PositionedBoardObject> objects = [];
 
-  void removeObject(BoardObject object) {
+  void removeObject(PositionedBoardObject object) {
     objects.remove(object);
 
     for (final obj in objects) {

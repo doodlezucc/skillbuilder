@@ -2,27 +2,11 @@ import 'package:flutter/material.dart';
 import 'board/board.dart';
 
 import 'branding.dart';
+import 'example_data.dart';
 import 'models/board.dart';
-import 'models/milestone.dart';
 
 class MyHomePage extends StatefulWidget {
-  final milestoneA = MilestoneData(
-    label: 'w',
-    position: const Offset(0, 0),
-  );
-
-  final milestoneB = MilestoneData(
-    label: "there's a curtain on the E."
-        '\nit looks like an F.'
-        "\nit's not an F.",
-    position: const Offset(500, 300),
-  );
-
-  late final data = BoardData()
-    ..objects.addAll([
-      milestoneA..connections.add(milestoneB),
-      milestoneB,
-    ]);
+  final BoardData data = exampleData;
 
   MyHomePage({super.key});
 

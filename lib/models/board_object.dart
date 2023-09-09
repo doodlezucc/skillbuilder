@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-abstract class BoardObject {
+abstract class PositionedBoardObject {
   Offset position;
 
-  BoardObject({required this.position});
+  PositionedBoardObject({required this.position});
 
   Widget toWidget({required void Function() onDelete});
 }

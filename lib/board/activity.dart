@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../models/milestone.dart';
+import '../models/activity.dart';
 import 'labeled_positioned.dart';
 
-class Milestone extends StatelessWidget {
-  final MilestoneData data;
+class Activity extends StatelessWidget {
+  final ActivityData data;
   final void Function() onDelete;
 
-  const Milestone(this.data, {super.key, required this.onDelete});
+  const Activity(this.data, {super.key, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
