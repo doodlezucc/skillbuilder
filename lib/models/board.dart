@@ -12,19 +12,16 @@ class BoardData extends DependencyGraph {
 
   void addObject(PositionedBoardObject object) {
     _objects.add(object);
-    invalidateDependencyCache();
   }
 
   void removeObject(PositionedBoardObject object) {
     _objects.remove(object);
 
     for (final obj in _objects) {
-      if (obj is HasOutput) {
-        (obj as HasOutput).connections.remove(object);
+      if (obj is HasInput) {
+        (obj as HasInput).ingoing.remove(object);
       }
     }
-
-    invalidateDependencyCache();
   }
 
   @override

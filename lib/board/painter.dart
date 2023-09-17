@@ -39,13 +39,13 @@ class BoardPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     for (final obj in board.objects) {
-      if (obj is HasOutput) {
-        final ends = (obj as HasOutput).connections;
+      if (obj is HasInput) {
+        final starts = (obj as HasInput).ingoing;
 
-        for (final end in ends) {
+        for (final start in starts) {
           paintLineBetween(
+            (start as PositionedBoardObject).position,
             obj.position,
-            (end as PositionedBoardObject).position,
             canvas,
           );
         }

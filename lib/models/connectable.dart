@@ -1,5 +1,7 @@
 mixin Connectable {}
 
-mixin HasOutput on Connectable {
-  Set<Connectable> connections = {};
+mixin HasInput on Connectable {
+  Set<HasOutput> ingoing = {};
 }
+
+mixin HasOutput on Connectable {}

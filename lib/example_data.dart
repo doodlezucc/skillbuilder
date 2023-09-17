@@ -31,9 +31,9 @@ final _milestone = MilestoneData(
 );
 
 final exampleData = BoardData({
-  _activityPotatoSalad..connections.add(_activityCook),
-  _activityCook..connections.add(_skillCookingBasics),
-  _skillCookingBasics..connections.add(_skillCooking),
-  _skillCooking..connections.add(_milestone),
-  _milestone,
+  _activityPotatoSalad,
+  _activityCook..ingoing.add(_activityPotatoSalad),
+  _skillCookingBasics..ingoing.add(_activityCook),
+  _skillCooking..ingoing.add(_skillCookingBasics),
+  _milestone..ingoing.add(_skillCooking),
 });

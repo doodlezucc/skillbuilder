@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../board/activity.dart';
 import 'board.dart';
+import 'connectable.dart';
 import 'labeled.dart';
 
-class ActivityData extends LabeledData {
+class ActivityData extends LabeledData with HasInput {
   ActivityData({required super.label, required super.position});
 
   @override
