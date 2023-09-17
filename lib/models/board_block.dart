@@ -5,14 +5,13 @@ import 'board.dart';
 import 'connectable.dart';
 import 'milestone.dart';
 
-abstract class PositionedBoardObject with Connectable, Serializable {
+abstract class BoardBlock with Connectable, Serializable {
   Offset position;
 
-  PositionedBoardObject({required this.position});
-  PositionedBoardObject.fromJson(Json json)
-      : position = OffsetJson.from(json['position']);
+  BoardBlock({required this.position});
+  BoardBlock.fromJson(Json json) : position = OffsetJson.from(json['position']);
 
-  static PositionedBoardObject parse(Json json) {
+  static BoardBlock parse(Json json) {
     return MilestoneData.fromJson(json);
   }
 

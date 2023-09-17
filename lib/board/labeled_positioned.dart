@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/labeled.dart';
-import 'positioned.dart';
+import 'block.dart';
 
 class LabeledPositioned extends StatelessWidget {
   final LabeledData data;
@@ -27,7 +27,7 @@ class LabeledPositioned extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PositionedObject(
+    return Block(
       data,
       onDelete: onDelete,
       onTap: onTap,

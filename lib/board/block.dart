@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../models/board_object.dart';
+import '../models/board_block.dart';
 import 'draggable.dart';
 
-class PositionedObject<T extends PositionedBoardObject> extends StatefulWidget {
+class Block<T extends BoardBlock> extends StatefulWidget {
   final T data;
   final void Function() onDelete;
   final GestureTapCallback? onTap;
   final Widget child;
 
-  const PositionedObject(
+  const Block(
     this.data, {
     super.key,
     required this.onDelete,
@@ -18,10 +18,10 @@ class PositionedObject<T extends PositionedBoardObject> extends StatefulWidget {
   });
 
   @override
-  State<PositionedObject> createState() => _PositionedObjectState();
+  State<Block> createState() => _BlockState();
 }
 
-class _PositionedObjectState extends State<PositionedObject> {
+class _BlockState extends State<Block> {
   bool dragged = false;
 
   @override

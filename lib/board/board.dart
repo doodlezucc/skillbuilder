@@ -33,12 +33,12 @@ class _BoardState extends State<Board> {
   void onDoubleTap(TapDownDetails details) {
     setState(() {
       final position = details.localPosition - size.center(Offset.zero);
-      final object = MilestoneData(
+      final block = MilestoneData(
         label: 'New Milestone',
         position: position,
       );
 
-      widget.data.addObject(object);
+      widget.data.addBlock(block);
     });
   }
 
@@ -66,10 +66,10 @@ class _BoardState extends State<Board> {
                   height: size.height,
                 ),
               ),
-              ...widget.data.objects.map((obj) => obj.toWidget(
+              ...widget.data.blocks.map((obj) => obj.toWidget(
                     context: widget.data,
                     onDelete: () => setState(() {
-                      widget.data.removeObject(obj);
+                      widget.data.removeBlock(obj);
                     }),
                   )),
             ],

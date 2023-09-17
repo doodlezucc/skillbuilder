@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/board.dart';
-import '../models/board_object.dart';
+import '../models/board_block.dart';
 import '../models/connectable.dart';
 
 class BoardPainter extends CustomPainter {
@@ -38,13 +38,13 @@ class BoardPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    for (final obj in board.objects) {
+    for (final obj in board.blocks) {
       if (obj is HasInput) {
         final starts = (obj as HasInput).ingoing;
 
         for (final start in starts) {
           paintLineBetween(
-            (start as PositionedBoardObject).position,
+            (start as BoardBlock).position,
             obj.position,
             canvas,
           );

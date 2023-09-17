@@ -1,37 +1,37 @@
 import '../io/serializable.dart';
-import 'board_object.dart';
+import 'board_block.dart';
 import 'connectable.dart';
 import 'dependency_graph.dart';
 
 typedef BoardContext = BoardData;
 
 class BoardData extends DependencyGraph with Serializable {
-  final Set<PositionedBoardObject> _objects;
-  Iterable<PositionedBoardObject> get objects => _objects;
+  final Set<BoardBlock> _blocks;
+  Iterable<BoardBlock> get blocks => _blocks;
 
-  BoardData(Set<PositionedBoardObject> objects) : _objects = objects;
+  BoardData(Set<BoardBlock> blocks) : _blocks = blocks;
   BoardData.fromJson(Json json)
-      : _objects = SetJson.from(json['blocks'], PositionedBoardObject.parse);
+      : _blocks = SetJson.from(json['blocks'], BoardBlock.parse);
 
-  void addObject(PositionedBoardObject object) {
-    _objects.add(object);
+  void addBlock(BoardBlock block) {
+    _blocks.add(block);
   }
 
-  void removeObject(PositionedBoardObject object) {
-    _objects.remove(object);
+  void removeBlock(BoardBlock block) {
+    _blocks.remove(block);
 
-    for (final obj in _objects) {
-      if (obj is HasInput) {
-        (obj as HasInput).ingoing.remove(object);
+    for (final other in _blocks) {
+      if (other is HasInput) {
+        (other as HasInput).ingoing.remove(block);
       }
     }
   }
 
   @override
-  Iterable<Connectable> get connectables => _objects;
+  Iterable<Connectable> get connectables => _blocks;
 
   @override
   Json toJson() => {
-        'blocks': _objects.toList(),
+        'blocks': _blocks.toList(),
       };
 }
