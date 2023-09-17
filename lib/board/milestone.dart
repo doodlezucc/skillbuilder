@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/board.dart';
-import '../models/milestone.dart';
+import '../models/blocks/milestone.dart';
 import '../models/timestamped.dart';
 import 'labeled_positioned.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/board.dart';
-import '../models/board_block.dart';
+import '../models/blocks/board_block.dart';
 import '../models/connectable.dart';
 
 class BoardPainter extends CustomPainter {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../board/activity.dart';
-import '../io/serializable.dart';
-import 'board.dart';
-import 'connectable.dart';
+import '../../board/activity.dart';
+import '../../io/serializable.dart';
+import '../board.dart';
+import '../connectable.dart';
 import 'labeled.dart';
 
 class ActivityData extends LabeledData with HasInput {

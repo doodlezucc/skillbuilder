@@ -1,5 +1,5 @@
 import '../io/serializable.dart';
-import 'board_block.dart';
+import 'blocks/board_block.dart';
 import 'connectable.dart';
 import 'dependency_graph.dart';
 

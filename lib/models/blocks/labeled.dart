@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 
-import '../io/serializable.dart';
-import 'connectable.dart';
+import '../../io/serializable.dart';
+import '../connectable.dart';
 import 'board_block.dart';
 
 abstract class LabeledData extends BoardBlock with HasOutput {

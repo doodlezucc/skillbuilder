@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/skill.dart';
+import '../models/blocks/skill.dart';
 import 'labeled_positioned.dart';
 
 class Skill extends StatelessWidget {

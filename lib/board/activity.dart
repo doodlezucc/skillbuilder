@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/activity.dart';
+import '../models/blocks/activity.dart';
 import 'labeled_positioned.dart';
 
 class Activity extends StatelessWidget {

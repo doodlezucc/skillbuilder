@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../io/serializable.dart';
-import 'board.dart';
-import 'connectable.dart';
+import '../../io/serializable.dart';
+import '../board.dart';
+import '../connectable.dart';
 import 'milestone.dart';
 
 abstract class BoardBlock with Connectable, Serializable {

@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'io/save_state.dart';
-import 'models/activity.dart';
+import 'models/blocks/activity.dart';
 import 'models/board.dart';
-import 'models/milestone.dart';
-import 'models/skill.dart';
+import 'models/blocks/milestone.dart';
+import 'models/blocks/skill.dart';
 
 final _activityPotatoSalad = ActivityData(
   label: 'Potato Salad',

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/board.dart';
-import '../models/milestone.dart';
+import '../models/blocks/milestone.dart';
 import 'animated_painter.dart';
 
 class Board extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/board_block.dart';
+import '../models/blocks/board_block.dart';
 import 'draggable.dart';
 
 class Block<T extends BoardBlock> extends StatefulWidget {
