@@ -31,7 +31,15 @@ class BoardData extends DependencyGraph with Serializable {
   Iterable<Connectable> get connectables => _blocks;
 
   @override
-  Json toJson() => {
-        'blocks': _blocks.toList(),
-      };
+  Json toJson() {
+    final ids = _blocks.makeIdMap();
+
+    return {
+      'blocks': _blocks.toJsonWithIds(ids).toList(),
+      'connections': getConnectionPairs()
+          .mapByLookup(ids)
+          .map((tuple) => [tuple.$1, tuple.$2])
+          .toList(),
+    };
+  }
 }

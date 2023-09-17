@@ -26,4 +26,16 @@ abstract class DependencyGraph<T extends Connectable> {
 
     return deps;
   }
+
+  List<(HasOutput, HasInput)> getConnectionPairs() {
+    final pairs = <(HasOutput, HasInput)>[];
+
+    for (final consumer in connectables.whereType<HasInput>()) {
+      pairs.addAll(consumer.ingoing.map(
+        (producer) => (producer, consumer),
+      ));
+    }
+
+    return pairs;
+  }
 }
