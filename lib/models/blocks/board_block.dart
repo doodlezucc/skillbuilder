@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../io/serializable.dart';
 import '../board.dart';
 import '../connectable.dart';
+import 'block_type.dart';
 import 'milestone.dart';
 
 abstract class BoardBlock with Connectable, Serializable {
@@ -15,6 +16,8 @@ abstract class BoardBlock with Connectable, Serializable {
     return MilestoneData.fromJson(json);
   }
 
+  BlockType get type;
+
   Widget toWidget({
     required void Function() onDelete,
     required BoardContext context,
@@ -23,6 +26,7 @@ abstract class BoardBlock with Connectable, Serializable {
   @override
   @mustCallSuper
   Json toJson() => {
+        'type': type.name,
         'position': position.toJson(),
       };
 }
