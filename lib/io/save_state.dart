@@ -6,7 +6,9 @@ import '../models/board.dart';
 import 'serializable.dart';
 
 class SaveStateManager {
-  static const JsonEncoder _jsonEncoder = JsonEncoder.withIndent('  ');
+  static const usePrettyJson = false;
+  static const JsonEncoder _jsonEncoder =
+      usePrettyJson ? JsonEncoder.withIndent('  ') : JsonEncoder();
 
   File file;
 
