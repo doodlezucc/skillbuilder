@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'io/save_state.dart';
 import 'models/activity.dart';
 import 'models/board.dart';
 import 'models/milestone.dart';
@@ -30,10 +31,12 @@ final _milestone = MilestoneData(
   position: const Offset(600, 0),
 );
 
-final exampleData = BoardData({
+final _exampleBoard = BoardData({
   _activityPotatoSalad,
   _activityCook..ingoing.add(_activityPotatoSalad),
   _skillCookingBasics..ingoing.add(_activityCook),
   _skillCooking..ingoing.add(_skillCookingBasics),
   _milestone..ingoing.add(_skillCooking),
 });
+
+final exampleSaveState = SaveState(boardData: _exampleBoard);

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import '../example_data.dart';
 import '../models/board.dart';
 import 'serializable.dart';
 
@@ -34,9 +35,22 @@ class SaveStateManager {
 
     print('Loaded!');
   }
+
+  Future<void> loadOrUseDefault() async {
+    try {
+      await load();
+    } on FileSystemException catch (_) {
+      _state = exampleSaveState;
+      print('Using example save state');
+    }
+  }
 }
 
 class SaveState implements Serializable {
+  static final SaveState empty = SaveState(
+    boardData: BoardData({}),
+  );
+
   final BoardData boardData;
 
   SaveState({required this.boardData});

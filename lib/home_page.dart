@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'board/board.dart';
 
 import 'branding.dart';
-import 'example_data.dart';
-import 'models/board.dart';
+import 'io/save_state.dart';
 
 class MyHomePage extends StatefulWidget {
-  final BoardData data = exampleData;
+  final SaveState saveState;
 
-  MyHomePage({super.key});
+  const MyHomePage({super.key, required this.saveState});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -22,7 +21,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text(appName),
       ),
-      body: Board(data: widget.data),
+      body: Board(data: widget.saveState.boardData),
     );
   }
 }
