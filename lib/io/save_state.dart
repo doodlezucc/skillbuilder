@@ -6,7 +6,7 @@ import '../models/board.dart';
 import 'serializable.dart';
 
 class SaveStateManager {
-  static const JsonEncoder jsonEncoder = JsonEncoder.withIndent('  ');
+  static const JsonEncoder _jsonEncoder = JsonEncoder.withIndent('  ');
 
   File file;
 
@@ -20,11 +20,11 @@ class SaveStateManager {
       throw StateError('No state is loaded');
     }
 
-    final stateJsonString = jsonEncoder.convert(state);
+    final stateJsonString = _jsonEncoder.convert(state!);
     await file.create(recursive: true);
     await file.writeAsString(stateJsonString);
 
-    print('Saved!');
+    print('Saved ${file.path}');
   }
 
   Future<void> load() async {
@@ -33,7 +33,7 @@ class SaveStateManager {
 
     _state = SaveState.fromJson(stateJson);
 
-    print('Loaded!');
+    print('Loaded ${file.path}');
   }
 
   Future<void> loadOrUseDefault() async {

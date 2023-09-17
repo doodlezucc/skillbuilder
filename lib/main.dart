@@ -30,8 +30,18 @@ class _MyAppState extends State<MyApp> {
     loadSaveState();
   }
 
+  static Future<Directory> _getSaveDirectory() async {
+    if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
+      // The documents directory on desktop platforms doesn't actually reflect
+      // an application specific directory and instead uses "~/Documents".
+      return await getApplicationSupportDirectory();
+    }
+
+    return await getApplicationDocumentsDirectory();
+  }
+
   Future<void> loadSaveState() async {
-    final directory = await getApplicationDocumentsDirectory();
+    final directory = await _getSaveDirectory();
     final saveFile = File(join(directory.path, saveFileName));
 
     saveStateManager = SaveStateManager(saveFile);
@@ -49,7 +59,7 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       home: MyHomePage(
-        saveState: saveStateManager?.state ?? SaveState.empty,
+        saveStateManager: saveStateManager,
       ),
     );
   }

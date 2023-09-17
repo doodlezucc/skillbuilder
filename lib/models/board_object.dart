@@ -24,6 +24,6 @@ abstract class PositionedBoardObject with Connectable, Serializable {
   @override
   @mustCallSuper
   Json toJson() => {
-        'position': position,
+        'position': position.toJson(),
       };
 }
