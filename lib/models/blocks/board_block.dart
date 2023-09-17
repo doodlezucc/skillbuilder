@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../../io/serializable.dart';
 import '../board.dart';
 import '../connectable.dart';
+import 'activity.dart';
 import 'block_type.dart';
 import 'milestone.dart';
+import 'skill.dart';
 
 abstract class BoardBlock with Connectable, Serializable {
   Offset position;
@@ -12,16 +14,27 @@ abstract class BoardBlock with Connectable, Serializable {
   BoardBlock({required this.position});
   BoardBlock.fromJson(Json json) : position = OffsetJson.from(json['position']);
 
-  static BoardBlock parse(Json json) {
-    return MilestoneData.fromJson(json);
-  }
-
   BlockType get type;
 
   Widget toWidget({
     required void Function() onDelete,
     required BoardContext context,
   });
+
+  static BoardBlock parse(Json json) {
+    final typeName = json['type'];
+    final type =
+        BlockType.values.firstWhere((blockType) => blockType.name == typeName);
+
+    switch (type) {
+      case BlockType.activity:
+        return ActivityData.fromJson(json);
+      case BlockType.milestone:
+        return MilestoneData.fromJson(json);
+      case BlockType.skill:
+        return SkillData.fromJson(json);
+    }
+  }
 
   @override
   @mustCallSuper
