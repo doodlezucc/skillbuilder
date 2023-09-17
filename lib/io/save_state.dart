@@ -1,11 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
-
-import 'package:meta/meta.dart';
 
 import '../models/board.dart';
 import 'serializable.dart';
 
 class SaveStateManager {
+  static const JsonEncoder jsonEncoder = JsonEncoder.withIndent('  ');
+
   File file;
 
   SaveState? _state;
@@ -17,9 +18,22 @@ class SaveStateManager {
     if (state == null) {
       throw StateError('No state is loaded');
     }
+
+    final stateJsonString = jsonEncoder.convert(state);
+    await file.create(recursive: true);
+    await file.writeAsString(stateJsonString);
+
+    print('Saved!');
   }
 
-  Future<void> load() async {}
+  Future<void> load() async {
+    final stateJsonString = await file.readAsString();
+    final stateJson = jsonDecode(stateJsonString);
+
+    _state = SaveState.fromJson(stateJson);
+
+    print('Loaded!');
+  }
 }
 
 class SaveState implements Serializable {
@@ -29,7 +43,6 @@ class SaveState implements Serializable {
   SaveState.fromJson(Json json) : boardData = BoardData.fromJson(json['board']);
 
   @override
-  @mustCallSuper
   Json toJson() => {
         'board': boardData,
       };
