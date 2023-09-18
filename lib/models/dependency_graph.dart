@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'blocks/board_block.dart';
 import 'connectable.dart';
 
 abstract class DependencyGraph<T extends Connectable> {
@@ -37,5 +38,12 @@ abstract class DependencyGraph<T extends Connectable> {
     }
 
     return pairs;
+  }
+
+  void applyConnectionPairs(Iterable<(BoardBlock, BoardBlock)> pairs) {
+    for (final pair in pairs) {
+      final (producer, consumer) = pair;
+      (consumer as HasInput).ingoing.add(producer as HasOutput);
+    }
   }
 }

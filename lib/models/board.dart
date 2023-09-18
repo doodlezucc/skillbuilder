@@ -10,8 +10,19 @@ class BoardData extends DependencyGraph with Serializable {
   Iterable<BoardBlock> get blocks => _blocks;
 
   BoardData(Set<BoardBlock> blocks) : _blocks = blocks;
-  BoardData.fromJson(Json json)
-      : _blocks = SetJson.from(json['blocks'], BoardBlock.parse);
+  BoardData.fromJson(Json json) : _blocks = {} {
+    final Iterable blockIterable = json['blocks'];
+    final Map<int, BoardBlock> idOfBlocks =
+        blockIterable.toParsedIdMap(BoardBlock.parse);
+
+    _blocks.addAll(idOfBlocks.values);
+
+    final Iterable dynamicPairs = json['connections'];
+    final idPairs = dynamicPairs.cast<List>().mapToTuples<int, int>();
+    final pairs = idPairs.mapByLookup(idOfBlocks);
+
+    applyConnectionPairs(pairs);
+  }
 
   void addBlock(BoardBlock block) {
     _blocks.add(block);

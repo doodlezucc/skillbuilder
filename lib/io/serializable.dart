@@ -42,6 +42,20 @@ extension IterableJson<T extends Serializable> on Iterable<T> {
   }
 }
 
+extension IterableIdExtension on Iterable<dynamic> {
+  Map<int, T> toParsedIdMap<T>(T Function(Json json) convert) {
+    final Map<int, T> idOfBlocks = {};
+
+    for (final elementJson in this) {
+      final id = elementJson['id'];
+      final block = convert(elementJson);
+      idOfBlocks[id] = block;
+    }
+
+    return idOfBlocks;
+  }
+}
+
 extension TupleIterable<A, B> on Iterable<(A, B)> {
   Iterable<(O, O)> mapByLookup<I, O>(Map<I, O> lookup) {
     O doLookup(I input) {
@@ -52,6 +66,12 @@ extension TupleIterable<A, B> on Iterable<(A, B)> {
       final (a, b) = tuple;
       return (doLookup(a as I), doLookup(b as I));
     });
+  }
+}
+
+extension TupleListExtension on Iterable<List> {
+  Iterable<(A, B)> mapToTuples<A, B>() {
+    return map((list) => (list[0], list[1]));
   }
 }
 
