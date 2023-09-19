@@ -5,9 +5,10 @@ import '../models/blocks/milestone.dart';
 import 'animated_painter.dart';
 
 class Board extends StatefulWidget {
+  final BoardContext context;
   final BoardData data;
 
-  const Board({super.key, required this.data});
+  const Board({super.key, required this.data, required this.context});
 
   @override
   State<Board> createState() => _BoardState();
@@ -66,12 +67,7 @@ class _BoardState extends State<Board> {
                   height: size.height,
                 ),
               ),
-              ...widget.data.blocks.map((obj) => obj.toWidget(
-                    context: widget.data,
-                    onDelete: () => setState(() {
-                      widget.data.removeBlock(obj);
-                    }),
-                  )),
+              ...widget.data.blocks.map((obj) => obj.toWidget(widget.context)),
             ],
           ),
         ),

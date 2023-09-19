@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../models/blocks/labeled.dart';
+import '../models/board.dart';
 import 'block.dart';
 
 class LabeledPositioned extends StatelessWidget {
   final LabeledData data;
-  final void Function() onDelete;
+  final BoardContext context;
   final void Function()? onTap;
   final String? debugLabel;
 
@@ -20,7 +21,7 @@ class LabeledPositioned extends StatelessWidget {
   const LabeledPositioned(
     this.data, {
     super.key,
-    required this.onDelete,
+    required this.context,
     this.onTap,
     this.debugLabel,
   });
@@ -29,7 +30,7 @@ class LabeledPositioned extends StatelessWidget {
   Widget build(BuildContext context) {
     return Block(
       data,
-      onDelete: onDelete,
+      context: this.context,
       onTap: onTap,
       child: Text(
         label,

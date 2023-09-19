@@ -15,9 +15,5 @@ class ActivityData extends LabeledData with HasInput {
   BlockType get type => BlockType.activity;
 
   @override
-  Widget toWidget({
-    required void Function() onDelete,
-    required BoardContext context,
-  }) =>
-      Activity(this, onDelete: onDelete);
+  Widget toWidget(BoardContext context) => Activity(this, context: context);
 }

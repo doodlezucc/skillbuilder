@@ -16,10 +16,7 @@ abstract class BoardBlock with Connectable, Serializable {
 
   BlockType get type;
 
-  Widget toWidget({
-    required void Function() onDelete,
-    required BoardContext context,
-  });
+  Widget toWidget(BoardContext context);
 
   static BoardBlock parse(Json json) {
     final typeName = json['type'];

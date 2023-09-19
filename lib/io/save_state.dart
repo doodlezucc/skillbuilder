@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -10,14 +11,43 @@ class SaveStateManager {
   static const JsonEncoder _jsonEncoder =
       usePrettyJson ? JsonEncoder.withIndent('  ') : JsonEncoder();
 
+  static const minSaveInterval = Duration(seconds: 1);
+
   File file;
+  Future<void>? _saveCompletion;
+  bool get isSaving => _saveCompletion != null;
 
   SaveState? _state;
   SaveState? get state => _state;
 
+  DateTime? _lastSaved;
+  DateTime? get lastSaved => _lastSaved;
+
   SaveStateManager(this.file);
 
   Future<void> save() async {
+    if (!isSaving) {
+      if (lastSaved == null) {
+        _saveCompletion = _performSave();
+      } else {
+        final timeSinceSave = DateTime.now().difference(lastSaved!);
+
+        if (timeSinceSave < minSaveInterval) {
+          final waitCompletion =
+              Future.delayed(minSaveInterval - timeSinceSave);
+
+          _saveCompletion = waitCompletion.then((_) => _performSave());
+        } else {
+          _saveCompletion = _performSave();
+        }
+      }
+    }
+
+    await _saveCompletion;
+    _saveCompletion = null;
+  }
+
+  Future<void> _performSave() async {
     if (state == null) {
       throw StateError('No state is loaded');
     }
@@ -25,6 +55,8 @@ class SaveStateManager {
     final stateJsonString = _jsonEncoder.convert(state!);
     await file.create(recursive: true);
     await file.writeAsString(stateJsonString);
+
+    _lastSaved = DateTime.now();
 
     print('Saved ${file.path}');
   }

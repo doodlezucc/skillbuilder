@@ -1,9 +1,20 @@
+import '../io/save_state.dart';
 import '../io/serializable.dart';
 import 'blocks/board_block.dart';
 import 'connectable.dart';
 import 'dependency_graph.dart';
 
-typedef BoardContext = BoardData;
+class BoardContext {
+  final SaveState _saveState;
+  final Future<void> Function() save;
+
+  BoardData get board => _saveState.boardData;
+
+  BoardContext({
+    required SaveState saveState,
+    required this.save,
+  }) : _saveState = saveState;
+}
 
 class BoardData extends DependencyGraph with Serializable {
   final Set<BoardBlock> _blocks;

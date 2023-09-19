@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
 import '../models/blocks/board_block.dart';
+import '../models/board.dart';
 import 'draggable.dart';
 
 class Block<T extends BoardBlock> extends StatefulWidget {
   final T data;
-  final void Function() onDelete;
+  final BoardContext context;
   final GestureTapCallback? onTap;
   final Widget child;
 
   const Block(
     this.data, {
     super.key,
-    required this.onDelete,
+    required this.context,
     required this.child,
     this.onTap,
   });
@@ -33,9 +34,12 @@ class _BlockState extends State<Block> {
       }),
       onDragStateChange: (isDragging) => setState(() {
         dragged = isDragging;
+        if (!isDragging) {
+          widget.context.save();
+        }
       }),
       onLongPressStart: (_) {
-        widget.onDelete();
+        widget.context.board.removeBlock(widget.data);
       },
       onTap: widget.onTap,
       child: UnconstrainedBox(

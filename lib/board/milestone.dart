@@ -8,12 +8,10 @@ import 'labeled_positioned.dart';
 class Milestone extends StatefulWidget {
   final BoardContext context;
   final MilestoneData data;
-  final void Function() onDelete;
 
   const Milestone(
     this.data, {
     super.key,
-    required this.onDelete,
     required this.context,
   });
 
@@ -24,11 +22,11 @@ class Milestone extends StatefulWidget {
 class _MilestoneState extends State<Milestone> {
   @override
   Widget build(BuildContext context) {
-    final deps = widget.context.getAllDependenciesOf(widget.data);
+    final deps = widget.context.board.getAllDependenciesOf(widget.data);
 
     return LabeledPositioned(
       widget.data,
-      onDelete: widget.onDelete,
+      context: widget.context,
       debugLabel:
           'Reached: ${widget.data.isReached.value} | Deps: ${deps.length}',
       onTap: () {

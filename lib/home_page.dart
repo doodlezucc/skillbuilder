@@ -3,6 +3,7 @@ import 'board/board.dart';
 
 import 'branding.dart';
 import 'io/save_state.dart';
+import 'models/board.dart';
 
 class MyHomePage extends StatefulWidget {
   final SaveStateManager? saveStateManager;
@@ -37,7 +38,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: Board(data: saveState.boardData),
+      body: Board(
+          data: saveState.boardData,
+          context: BoardContext(
+            saveState: saveState,
+            save: save,
+          )),
     );
   }
 }

@@ -18,13 +18,5 @@ class MilestoneData extends LabeledData with HasInput {
   BlockType get type => BlockType.milestone;
 
   @override
-  Widget toWidget({
-    required void Function() onDelete,
-    required BoardContext context,
-  }) =>
-      Milestone(
-        this,
-        onDelete: onDelete,
-        context: context,
-      );
+  Widget toWidget(BoardContext context) => Milestone(this, context: context);
 }

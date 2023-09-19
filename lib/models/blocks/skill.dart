@@ -15,9 +15,5 @@ class SkillData extends LabeledData with HasInput {
   BlockType get type => BlockType.skill;
 
   @override
-  Widget toWidget({
-    required void Function() onDelete,
-    required BoardContext context,
-  }) =>
-      Skill(this, onDelete: onDelete);
+  Widget toWidget(BoardContext context) => Skill(this, context: context);
 }
