@@ -40,6 +40,7 @@ class _BlockState extends State<Block> {
       }),
       onLongPressStart: (_) {
         widget.context.board.removeBlock(widget.data);
+        widget.context.save();
       },
       onTap: widget.onTap,
       child: UnconstrainedBox(

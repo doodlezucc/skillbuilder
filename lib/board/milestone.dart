@@ -32,6 +32,7 @@ class _MilestoneState extends State<Milestone> {
       onTap: () {
         setState(() {
           widget.data.isReached.toggle();
+          widget.context.save();
         });
       },
     );

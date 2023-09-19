@@ -6,9 +6,9 @@ import 'animated_painter.dart';
 
 class Board extends StatefulWidget {
   final BoardContext context;
-  final BoardData data;
+  BoardData get data => context.board;
 
-  const Board({super.key, required this.data, required this.context});
+  const Board({super.key, required this.context});
 
   @override
   State<Board> createState() => _BoardState();
@@ -40,6 +40,7 @@ class _BoardState extends State<Board> {
       );
 
       widget.data.addBlock(block);
+      widget.context.save();
     });
   }
 

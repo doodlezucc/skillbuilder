@@ -6,14 +6,17 @@ import 'dependency_graph.dart';
 
 class BoardContext {
   final SaveState _saveState;
-  final Future<void> Function() save;
+  final Future<void> Function() _save;
 
   BoardData get board => _saveState.boardData;
 
   BoardContext({
     required SaveState saveState,
-    required this.save,
-  }) : _saveState = saveState;
+    required Future<void> Function() save,
+  })  : _saveState = saveState,
+        _save = save;
+
+  Future<void> save() => _save();
 }
 
 class BoardData extends DependencyGraph with Serializable {

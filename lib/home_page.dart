@@ -39,11 +39,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: Board(
-          data: saveState.boardData,
-          context: BoardContext(
-            saveState: saveState,
-            save: save,
-          )),
+        context: BoardContext(
+          saveState: saveState,
+          save: save,
+        ),
+      ),
     );
   }
 }
