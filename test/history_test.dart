@@ -52,4 +52,73 @@ void main() {
       expect(history.redo, throwsStateError);
     });
   });
+
+  group('Purge redo stack', () {
+    final history = History();
+    late int currentState;
+
+    final action0to1 = Action(0, 1, (state) => currentState = state);
+    final action1to2 = Action(1, 2, (state) => currentState = state);
+    final action2to3 = Action(2, 3, (state) => currentState = state);
+
+    final action1to4 = Action(1, 4, (state) => currentState = state);
+
+    test('Push three actions', () {
+      history.push(action0to1);
+      history.push(action1to2);
+      history.push(action2to3);
+
+      expect(currentState, 3);
+    });
+
+    test('Undo', () {
+      history.undo();
+      expect(currentState, 2);
+
+      expect(history.canUndo, true);
+      expect(history.canRedo, true);
+
+      history.undo();
+      expect(currentState, 1);
+
+      expect(history.canUndo, true);
+      expect(history.canRedo, true);
+    });
+
+    test('Push new action', () {
+      history.push(action1to4);
+      expect(currentState, 4);
+
+      expect(history.canUndo, true);
+      expect(history.canRedo, false);
+    });
+
+    test('Undo all', () {
+      history.undo();
+      expect(currentState, 1);
+
+      expect(history.canUndo, true);
+      expect(history.canRedo, true);
+
+      history.undo();
+      expect(currentState, 0);
+
+      expect(history.canUndo, false);
+      expect(history.canRedo, true);
+    });
+
+    test('Redo all', () {
+      history.redo();
+      expect(currentState, 1);
+
+      expect(history.canUndo, true);
+      expect(history.canRedo, true);
+
+      history.redo();
+      expect(currentState, 4);
+
+      expect(history.canUndo, true);
+      expect(history.canRedo, false);
+    });
+  });
 }

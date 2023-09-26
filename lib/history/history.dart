@@ -7,7 +7,7 @@ class History {
 
   bool get isAtEndOfStack => _position == _stack.length;
 
-  bool get canUndo => _position == 0;
+  bool get canUndo => _position > 0;
   bool get canRedo => !isAtEndOfStack;
 
   void push(Action action) {
