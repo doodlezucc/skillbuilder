@@ -9,14 +9,24 @@ import 'labeled.dart';
 import '../timestamped.dart';
 
 class MilestoneData extends LabeledData with HasInput {
-  final Timestamped<bool> isReached = Timestamped(false);
+  final Timestamped<bool> isReached;
 
-  MilestoneData({required super.label, required super.position});
-  MilestoneData.fromJson(Json json) : super.fromJson(json);
+  MilestoneData({required super.label, required super.position})
+      : isReached = Timestamped(false);
+
+  MilestoneData.fromJson(Json json)
+      : isReached = Timestamped.fromJson(json['isReached']),
+        super.fromJson(json);
 
   @override
   BlockType get type => BlockType.milestone;
 
   @override
   Widget toWidget(BoardContext context) => Milestone(this, context: context);
+
+  @override
+  Json toJson() => {
+        ...super.toJson(),
+        'isReached': isReached,
+      };
 }
