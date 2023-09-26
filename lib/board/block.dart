@@ -23,7 +23,28 @@ class Block<T extends BoardBlock> extends StatefulWidget {
 }
 
 class _BlockState extends State<Block> {
+  late Offset positionBeforeDragging;
   bool dragged = false;
+
+  void onDragStateChange(bool isDragging) {
+    setState(() {
+      dragged = isDragging;
+    });
+
+    if (isDragging) {
+      positionBeforeDragging = widget.data.position;
+    } else {
+      onDragEnd();
+    }
+  }
+
+  void onDragEnd() {
+    Offset draggedOffset = widget.data.position - positionBeforeDragging;
+
+    if (draggedOffset != Offset.zero) {
+      widget.context.save();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +53,7 @@ class _BlockState extends State<Block> {
       onDrag: (position) => setState(() {
         widget.data.position = position;
       }),
-      onDragStateChange: (isDragging) => setState(() {
-        dragged = isDragging;
-        if (!isDragging) {
-          widget.context.save();
-        }
-      }),
+      onDragStateChange: onDragStateChange,
       onLongPressStart: (_) {
         widget.context.board.removeBlock(widget.data);
         widget.context.save();
