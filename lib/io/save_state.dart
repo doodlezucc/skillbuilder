@@ -7,15 +7,15 @@ import '../models/board.dart';
 import 'serializable.dart';
 
 class SaveStateManager {
-  static const usePrettyJson = false;
+  static const usePrettyJson = true;
   static const JsonEncoder _jsonEncoder =
       usePrettyJson ? JsonEncoder.withIndent('  ') : JsonEncoder();
 
   static const minSaveInterval = Duration(seconds: 1);
 
   File file;
-  Future<void>? _saveCompletion;
-  bool get isSaving => _saveCompletion != null;
+  Future<void>? _scheduledSave;
+  bool get isSaveScheduled => _scheduledSave != null;
 
   SaveState? _state;
   SaveState? get state => _state;
@@ -26,25 +26,23 @@ class SaveStateManager {
   SaveStateManager(this.file);
 
   Future<void> save() async {
-    if (!isSaving) {
-      if (lastSaved == null) {
-        _saveCompletion = _performSave();
-      } else {
-        final timeSinceSave = DateTime.now().difference(lastSaved!);
+    if (isSaveScheduled) {
+      return await _scheduledSave;
+    }
 
-        if (timeSinceSave < minSaveInterval) {
-          final waitCompletion =
-              Future.delayed(minSaveInterval - timeSinceSave);
+    if (lastSaved != null) {
+      final timeSinceSave = DateTime.now().difference(lastSaved!);
 
-          _saveCompletion = waitCompletion.then((_) => _performSave());
-        } else {
-          _saveCompletion = _performSave();
-        }
+      if (timeSinceSave < minSaveInterval) {
+        final waitCompletion = Future.delayed(minSaveInterval - timeSinceSave);
+
+        _scheduledSave = waitCompletion;
+        await _scheduledSave;
+        _scheduledSave = null;
       }
     }
 
-    await _saveCompletion;
-    _saveCompletion = null;
+    await _performSave();
   }
 
   Future<void> _performSave() async {
@@ -52,16 +50,17 @@ class SaveStateManager {
       throw StateError('No state is loaded');
     }
 
+    _lastSaved = DateTime.now();
+
     final stateJsonString = _jsonEncoder.convert(state!);
     await file.create(recursive: true);
     await file.writeAsString(stateJsonString);
-
-    _lastSaved = DateTime.now();
 
     print('Saved ${file.path}');
   }
 
   Future<void> load() async {
+    print('Loading ${file.path}');
     final stateJsonString = await file.readAsString();
     final stateJson = jsonDecode(stateJsonString);
 
