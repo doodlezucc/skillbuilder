@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:skillbuilder/history/action.dart';
+import 'package:skillbuilder/history/historic.dart';
 import 'package:skillbuilder/history/history.dart';
 
 void main() {
@@ -120,5 +121,31 @@ void main() {
       expect(history.canUndo, true);
       expect(history.canRedo, false);
     });
+  });
+
+  test('Historic properties', () {
+    final history = History();
+    final historicInt = Historic<int>(history, 0);
+
+    expect(historicInt.value, 0);
+
+    historicInt.value = 1;
+    expect(historicInt.value, 1);
+    expect(history.canUndo, true);
+
+    historicInt.value = 2;
+    expect(historicInt.value, 2);
+
+    history.undo();
+    expect(historicInt.value, 1);
+
+    history.undo();
+    expect(historicInt.value, 0);
+
+    history.redo();
+    expect(historicInt.value, 1);
+
+    history.redo();
+    expect(historicInt.value, 2);
   });
 }
