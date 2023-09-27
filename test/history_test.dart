@@ -16,7 +16,7 @@ void main() {
     final history = History();
     late int currentState;
 
-    final action = Action(0, 1, (state) => currentState = state);
+    final action = Action('0 -> 1', 0, 1, (state) => currentState = state);
 
     expect(history.canUndo, false);
     expect(history.canRedo, false);
@@ -50,10 +50,10 @@ void main() {
     final history = History();
     late int currentState;
 
-    final action0to1 = Action(0, 1, (state) => currentState = state);
-    final action1to2 = Action(1, 2, (state) => currentState = state);
-    final action2to3 = Action(2, 3, (state) => currentState = state);
-    final action1to4 = Action(1, 4, (state) => currentState = state);
+    final action0to1 = Action('0 -> 1', 0, 1, (state) => currentState = state);
+    final action1to2 = Action('1 -> 2', 1, 2, (state) => currentState = state);
+    final action2to3 = Action('2 -> 3', 2, 3, (state) => currentState = state);
+    final action1to4 = Action('1 -> 4', 1, 4, (state) => currentState = state);
 
     // Push three actions
     history.push(action0to1);
@@ -100,7 +100,7 @@ void main() {
 
   test('Historic properties', () {
     final history = History();
-    final historicInt = Historic<int>(0, history);
+    final historicInt = Historic<int>('Test Integer', 0, history);
 
     expect(historicInt.value, 0);
 

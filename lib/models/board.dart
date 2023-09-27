@@ -45,6 +45,7 @@ class BoardData extends DependencyGraph with Serializable {
 
   Action composeAddBlock(BoardBlock block) {
     return FunctionalAction(
+      'Add ${block.type} block',
       forward: () => _addBlock(block),
       backward: () => _removeBlock(block),
     );
@@ -52,6 +53,7 @@ class BoardData extends DependencyGraph with Serializable {
 
   Action composeRemoveBlock(BoardBlock block) {
     return FunctionalAction(
+      'Remove ${block.type} block',
       forward: () => _removeBlock(block),
       backward: () => _addBlock(block),
     );
