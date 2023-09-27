@@ -39,7 +39,9 @@ class _BoardState extends State<Board> {
         position: position,
       );
 
-      widget.data.addBlock(block);
+      final action = widget.context.board.composeAddBlock(block);
+      widget.context.history.push(action);
+
       widget.context.save();
     });
   }

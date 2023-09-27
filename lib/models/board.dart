@@ -1,3 +1,5 @@
+import '../history/action.dart';
+import '../history/functional_action.dart';
 import '../history/history.dart';
 import '../io/save_state.dart';
 import '../io/serializable.dart';
@@ -41,11 +43,25 @@ class BoardData extends DependencyGraph with Serializable {
     applyConnectionPairs(pairs);
   }
 
-  void addBlock(BoardBlock block) {
+  Action composeAddBlock(BoardBlock block) {
+    return FunctionalAction(
+      forward: () => _addBlock(block),
+      backward: () => _removeBlock(block),
+    );
+  }
+
+  Action composeRemoveBlock(BoardBlock block) {
+    return FunctionalAction(
+      forward: () => _removeBlock(block),
+      backward: () => _addBlock(block),
+    );
+  }
+
+  void _addBlock(BoardBlock block) {
     _blocks.add(block);
   }
 
-  void removeBlock(BoardBlock block) {
+  void _removeBlock(BoardBlock block) {
     _blocks.remove(block);
 
     for (final other in _blocks) {

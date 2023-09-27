@@ -55,7 +55,8 @@ class _BlockState extends State<Block> {
       }),
       onDragStateChange: onDragStateChange,
       onLongPressStart: (_) {
-        widget.context.board.removeBlock(widget.data);
+        final action = widget.context.board.composeRemoveBlock(widget.data);
+        widget.context.history.push(action);
         widget.context.save();
       },
       onTap: widget.onTap,
