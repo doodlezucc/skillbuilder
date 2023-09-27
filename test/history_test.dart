@@ -12,115 +12,90 @@ void main() {
     expect(History().redo, throwsStateError);
   });
 
-  group('Register single action', () {
+  test('Register single action', () {
     final history = History();
     late int currentState;
 
     final action = Action(0, 1, (state) => currentState = state);
 
-    test('Push', () {
-      expect(history.canUndo, false);
-      expect(history.canRedo, false);
+    expect(history.canUndo, false);
+    expect(history.canRedo, false);
 
-      history.push(action);
+    // Push
+    history.push(action);
+    expect(currentState, 1);
+    expect(history.canUndo, true);
+    expect(history.canRedo, false);
 
-      expect(currentState, 1);
-      expect(history.canUndo, true);
-      expect(history.canRedo, false);
-    });
+    // Undo
+    history.undo();
+    expect(currentState, 0);
+    expect(history.canUndo, false);
+    expect(history.canRedo, true);
 
-    test('Undo', () {
-      history.undo();
+    // Throw on second undo
+    expect(history.undo, throwsStateError);
 
-      expect(currentState, 0);
-      expect(history.canUndo, false);
-      expect(history.canRedo, true);
-    });
+    // Redo
+    history.redo();
+    expect(currentState, 1);
+    expect(history.canUndo, true);
+    expect(history.canRedo, false);
 
-    test('Throw on second undo', () {
-      expect(history.undo, throwsStateError);
-    });
-
-    test('Redo', () {
-      history.redo();
-
-      expect(currentState, 1);
-      expect(history.canUndo, true);
-      expect(history.canRedo, false);
-    });
-
-    test('Throw on second redo', () {
-      expect(history.redo, throwsStateError);
-    });
+    // Throw on second redo
+    expect(history.redo, throwsStateError);
   });
 
-  group('Purge redo stack', () {
+  test('Purge redo stack', () {
     final history = History();
     late int currentState;
 
     final action0to1 = Action(0, 1, (state) => currentState = state);
     final action1to2 = Action(1, 2, (state) => currentState = state);
     final action2to3 = Action(2, 3, (state) => currentState = state);
-
     final action1to4 = Action(1, 4, (state) => currentState = state);
 
-    test('Push three actions', () {
-      history.push(action0to1);
-      history.push(action1to2);
-      history.push(action2to3);
+    // Push three actions
+    history.push(action0to1);
+    history.push(action1to2);
+    history.push(action2to3);
+    expect(currentState, 3);
 
-      expect(currentState, 3);
-    });
+    // Undo
+    history.undo();
+    expect(currentState, 2);
+    expect(history.canUndo, true);
+    expect(history.canRedo, true);
+    history.undo();
+    expect(currentState, 1);
+    expect(history.canUndo, true);
+    expect(history.canRedo, true);
 
-    test('Undo', () {
-      history.undo();
-      expect(currentState, 2);
+    // Push new action
+    history.push(action1to4);
+    expect(currentState, 4);
+    expect(history.canUndo, true);
+    expect(history.canRedo, false);
 
-      expect(history.canUndo, true);
-      expect(history.canRedo, true);
+    // Undo all
+    history.undo();
+    expect(currentState, 1);
+    expect(history.canUndo, true);
+    expect(history.canRedo, true);
+    history.undo();
+    expect(currentState, 0);
+    expect(history.canUndo, false);
+    expect(history.canRedo, true);
 
-      history.undo();
-      expect(currentState, 1);
-
-      expect(history.canUndo, true);
-      expect(history.canRedo, true);
-    });
-
-    test('Push new action', () {
-      history.push(action1to4);
-      expect(currentState, 4);
-
-      expect(history.canUndo, true);
-      expect(history.canRedo, false);
-    });
-
-    test('Undo all', () {
-      history.undo();
-      expect(currentState, 1);
-
-      expect(history.canUndo, true);
-      expect(history.canRedo, true);
-
-      history.undo();
-      expect(currentState, 0);
-
-      expect(history.canUndo, false);
-      expect(history.canRedo, true);
-    });
-
-    test('Redo all', () {
-      history.redo();
-      expect(currentState, 1);
-
-      expect(history.canUndo, true);
-      expect(history.canRedo, true);
-
-      history.redo();
-      expect(currentState, 4);
-
-      expect(history.canUndo, true);
-      expect(history.canRedo, false);
-    });
+    // Redo all
+    history.redo();
+    expect(currentState, 1);
+    expect(history.canUndo, true);
+    expect(history.canRedo, true);
+    history.redo();
+    expect(currentState, 4);
+    expect(history.canUndo, true);
+    expect(history.canRedo, false);
   });
 
   test('Historic properties', () {
