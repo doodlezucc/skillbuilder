@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'board/board.dart';
 
 import 'branding.dart';
@@ -27,6 +28,25 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void _tryUndo() {
+    if (widget.history.canUndo) {
+      setState(() => widget.history.undo());
+    }
+  }
+
+  void _tryRedo() {
+    if (widget.history.canRedo) {
+      setState(() => widget.history.redo());
+    }
+  }
+
+  Map<ShortcutActivator, void Function()> getBindings() => {
+        const SingleActivator(LogicalKeyboardKey.keyZ, control: true): _tryUndo,
+        const SingleActivator(LogicalKeyboardKey.keyY, control: true): _tryRedo,
+        const SingleActivator(LogicalKeyboardKey.keyZ,
+            shift: true, control: true): _tryRedo,
+      };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,11 +60,17 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: Board(
-        context: BoardContext(
-          history: widget.history,
-          saveState: saveState,
-          save: save,
+      body: CallbackShortcuts(
+        bindings: getBindings(),
+        child: Focus(
+          autofocus: true,
+          child: Board(
+            context: BoardContext(
+              history: widget.history,
+              saveState: saveState,
+              save: save,
+            ),
+          ),
         ),
       ),
     );
