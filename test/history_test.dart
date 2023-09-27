@@ -100,7 +100,7 @@ void main() {
 
   test('Historic properties', () {
     final history = History();
-    final historicInt = Historic<int>(history, 0);
+    final historicInt = Historic<int>(0, history);
 
     expect(historicInt.value, 0);
 

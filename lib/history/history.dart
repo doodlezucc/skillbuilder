@@ -1,4 +1,5 @@
 import 'action.dart';
+import 'historic.dart';
 
 class History {
   final List<Action> _stack = [];
@@ -40,5 +41,11 @@ class History {
 
   void _purgeRedo() {
     _stack.removeRange(_position, _stack.length);
+  }
+
+  void register(Historic historic) {
+    historic.actionStream.listen((action) {
+      push(action);
+    });
   }
 }

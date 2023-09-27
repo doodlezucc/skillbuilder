@@ -14,6 +14,8 @@ abstract class BoardBlock with Connectable, Serializable {
   BoardBlock({required this.position});
   BoardBlock.fromJson(Json json) : position = OffsetJson.from(json['position']);
 
+  void register(BoardContext context) {}
+
   BlockType get type;
 
   Widget toWidget(BoardContext context);

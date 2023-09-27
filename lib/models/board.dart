@@ -1,3 +1,4 @@
+import '../history/history.dart';
 import '../io/save_state.dart';
 import '../io/serializable.dart';
 import 'blocks/board_block.dart';
@@ -5,12 +6,14 @@ import 'connectable.dart';
 import 'dependency_graph.dart';
 
 class BoardContext {
+  final History history;
   final SaveState _saveState;
   final Future<void> Function() _save;
 
   BoardData get board => _saveState.boardData;
 
   BoardContext({
+    required this.history,
     required SaveState saveState,
     required Future<void> Function() save,
   })  : _saveState = saveState,

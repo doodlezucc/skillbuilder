@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'board/board.dart';
 
 import 'branding.dart';
+import 'history/history.dart';
 import 'io/save_state.dart';
 import 'models/board.dart';
 
 class MyHomePage extends StatefulWidget {
   final SaveStateManager? saveStateManager;
+  final History history = History();
 
-  const MyHomePage({super.key, this.saveStateManager});
+  MyHomePage({super.key, this.saveStateManager});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -40,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Board(
         context: BoardContext(
+          history: widget.history,
           saveState: saveState,
           save: save,
         ),
