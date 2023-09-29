@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'toasts/toast.dart';
+import 'toasts/toast_container.dart';
+import 'toasts/toast_controller.dart';
 import 'board/board.dart';
 
 import 'branding.dart';
@@ -18,6 +21,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final toastController = ToastController();
+
   SaveState get saveState => widget.saveStateManager?.state ?? SaveState.empty;
 
   Future<void> save() async {
@@ -32,6 +37,8 @@ class _MyHomePageState extends State<MyHomePage> {
     if (widget.history.canUndo) {
       setState(() => widget.history.undo());
     }
+
+    toastController.push(Toast('Undid "a thing"', icon: Icons.undo));
   }
 
   void _tryRedo() {
@@ -64,12 +71,17 @@ class _MyHomePageState extends State<MyHomePage> {
         bindings: getBindings(),
         child: Focus(
           autofocus: true,
-          child: Board(
-            context: BoardContext(
-              history: widget.history,
-              saveState: saveState,
-              save: save,
-            ),
+          child: Stack(
+            children: [
+              Board(
+                context: BoardContext(
+                  history: widget.history,
+                  saveState: saveState,
+                  save: save,
+                ),
+              ),
+              ToastContainer(controller: toastController),
+            ],
           ),
         ),
       ),
