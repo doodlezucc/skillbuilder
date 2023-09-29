@@ -6,22 +6,22 @@ import '../models/blocks/labeled.dart';
 import '../models/board.dart';
 import 'draggable.dart';
 
-class Block<T extends BoardBlock> extends StatefulWidget {
+abstract class Block<T extends BoardBlock> extends StatefulWidget {
   final T data;
   final BoardContext context;
   final GestureTapCallback? onTap;
-  final Widget child;
 
   const Block(
     this.data, {
     super.key,
     required this.context,
-    required this.child,
     this.onTap,
   });
 
   @override
   State<Block> createState() => _BlockState();
+
+  Widget buildChild(BuildContext context);
 }
 
 class _BlockState extends State<Block> {
@@ -51,7 +51,6 @@ class _BlockState extends State<Block> {
   void onLongPress() async {
     // final action = widget.context.board.composeRemoveBlock(widget.data);
     // widget.context.history.push(action);
-    // widget.context.save();
 
     await Navigator.of(context).push(
       MaterialPageRoute(
@@ -59,7 +58,9 @@ class _BlockState extends State<Block> {
       ),
     );
 
-    setState(() {});
+    setState(() {
+      widget.context.save();
+    });
   }
 
   @override
@@ -89,7 +90,7 @@ class _BlockState extends State<Block> {
             horizontal: 16,
             vertical: 12,
           ),
-          child: widget.child,
+          child: widget.buildChild(context),
         ),
       ),
     );

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../models/blocks/labeled.dart';
-import '../models/board.dart';
 import 'block.dart';
 
-class LabeledPositioned extends StatelessWidget {
-  final LabeledData data;
-  final BoardContext context;
-  final void Function()? onTap;
+class LabeledPositioned extends Block<LabeledData> {
   final String? debugLabel;
 
   String get label {
@@ -19,25 +15,20 @@ class LabeledPositioned extends StatelessWidget {
   }
 
   const LabeledPositioned(
-    this.data, {
+    super.data, {
     super.key,
-    required this.context,
-    this.onTap,
+    required super.context,
+    super.onTap,
     this.debugLabel,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Block(
-      data,
-      context: this.context,
-      onTap: onTap,
-      child: Text(
-        label,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.onPrimary,
-        ),
+  Widget buildChild(BuildContext context) {
+    return Text(
+      label,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        color: Theme.of(context).colorScheme.onPrimary,
       ),
     );
   }
