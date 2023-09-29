@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../block_page.dart';
 import '../models/blocks/board_block.dart';
+import '../models/blocks/labeled.dart';
 import '../models/board.dart';
 import 'draggable.dart';
 
@@ -46,6 +48,20 @@ class _BlockState extends State<Block> {
     }
   }
 
+  void onLongPress() async {
+    // final action = widget.context.board.composeRemoveBlock(widget.data);
+    // widget.context.history.push(action);
+    // widget.context.save();
+
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => BlockPage(block: widget.data as LabeledData),
+      ),
+    );
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return BoardDraggable(
@@ -54,11 +70,7 @@ class _BlockState extends State<Block> {
         widget.data.position = position;
       }),
       onDragStateChange: onDragStateChange,
-      onLongPressStart: (_) {
-        final action = widget.context.board.composeRemoveBlock(widget.data);
-        widget.context.history.push(action);
-        widget.context.save();
-      },
+      onLongPressStart: (_) => onLongPress(),
       onTap: widget.onTap,
       child: UnconstrainedBox(
         child: Container(

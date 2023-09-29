@@ -56,6 +56,7 @@ class _MyAppState extends State<MyApp> {
       title: appName,
       theme: ThemeData(
         colorScheme: appColorScheme,
+        appBarTheme: appBarTheme,
         useMaterial3: true,
       ),
       home: MyHomePage(
