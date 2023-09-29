@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (widget.history.canUndo) {
       setState(() {
         final action = widget.history.undo();
-        toastController.push(Toast('Undo "${action.name}"', icon: Icons.undo));
+        toastController.push(Toast('Undo: ${action.name}', icon: Icons.undo));
       });
     }
   }
@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (widget.history.canRedo) {
       setState(() {
         final action = widget.history.redo();
-        toastController.push(Toast('Redo "${action.name}"', icon: Icons.redo));
+        toastController.push(Toast(action.name, icon: Icons.redo));
       });
     }
   }

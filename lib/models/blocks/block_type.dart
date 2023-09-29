@@ -1,5 +1,9 @@
 enum BlockType {
-  activity,
-  milestone,
-  skill,
+  activity('Activity'),
+  milestone('Milestone'),
+  skill('Skill');
+
+  final String name;
+
+  const BlockType(this.name);
 }
