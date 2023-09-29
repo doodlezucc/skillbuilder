@@ -35,15 +35,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _tryUndo() {
     if (widget.history.canUndo) {
-      setState(() => widget.history.undo());
+      setState(() {
+        final action = widget.history.undo();
+        toastController.push(Toast('Undo "${action.name}"', icon: Icons.undo));
+      });
     }
-
-    toastController.push(Toast('Undid "a thing"', icon: Icons.undo));
   }
 
   void _tryRedo() {
     if (widget.history.canRedo) {
-      setState(() => widget.history.redo());
+      setState(() {
+        final action = widget.history.redo();
+        toastController.push(Toast('Redo "${action.name}"', icon: Icons.redo));
+      });
     }
   }
 

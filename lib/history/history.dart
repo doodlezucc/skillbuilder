@@ -21,22 +21,28 @@ class History {
     _position++;
   }
 
-  void redo() {
+  Action redo() {
     if (isAtEndOfStack) {
       throw StateError('Unable to redo at end of history');
     }
 
-    _stack[_position].run();
+    final action = _stack[_position];
+    action.run();
     _position++;
+
+    return action;
   }
 
-  void undo() {
+  Action undo() {
     if (_position == 0) {
       throw StateError('Unable to undo at start of history');
     }
 
     _position--;
-    _stack[_position].unrun();
+
+    final action = _stack[_position];
+    action.unrun();
+    return action;
   }
 
   void _purgeRedo() {
