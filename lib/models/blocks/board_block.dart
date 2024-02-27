@@ -9,10 +9,16 @@ import 'milestone.dart';
 import 'skill.dart';
 
 abstract class BoardBlock with Connectable, Serializable {
+  final DateTime creationTime;
   Offset position;
 
-  BoardBlock({required this.position});
-  BoardBlock.fromJson(Json json) : position = OffsetJson.from(json['position']);
+  BoardBlock({required this.position, DateTime? creationTime})
+      : creationTime = creationTime ?? DateTime.now();
+
+  BoardBlock.fromJson(Json json)
+      : position = OffsetJson.from(json['position']),
+        creationTime =
+            DateTime.fromMillisecondsSinceEpoch(json['creationTime']);
 
   void register(BoardContext context) {}
 
@@ -40,5 +46,6 @@ abstract class BoardBlock with Connectable, Serializable {
   Json toJson() => {
         'type': type.name,
         'position': position.toJson(),
+        'creationTime': creationTime.millisecondsSinceEpoch,
       };
 }

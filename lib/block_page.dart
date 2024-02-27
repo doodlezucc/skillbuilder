@@ -37,12 +37,15 @@ class _BlockPageState extends State<BlockPage> {
         children: [
           TextField(
             controller: nameController,
-            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineSmall,
             decoration: const InputDecoration(
               border: InputBorder.none,
               hintText: 'Name...',
             ),
+          ),
+          Text(
+            'Created ${widget.block.creationTime}',
+            style: TextStyle(color: Colors.grey[700]),
           ),
         ],
       ),
