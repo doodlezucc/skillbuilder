@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 const String appName = 'Skillbuilder';
-final ColorScheme appColorScheme =
-    ColorScheme.fromSeed(seedColor: Colors.deepPurple);
+const Color primaryColor = Color(0xFF0DC16A);
+final ColorScheme appColorScheme = ColorScheme.fromSeed(
+  seedColor: primaryColor,
+  primary: primaryColor,
+);
 
 final AppBarTheme appBarTheme = AppBarTheme(
-  backgroundColor: appColorScheme.primaryContainer,
-  foregroundColor: appColorScheme.onPrimaryContainer,
+  backgroundColor: appColorScheme.primary,
+  foregroundColor: appColorScheme.onPrimary,
 );
